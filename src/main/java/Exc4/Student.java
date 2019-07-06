@@ -2,6 +2,8 @@ package Exc4;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Student {
@@ -23,6 +25,35 @@ public class Student {
         this.name = name;
         this.surname = surname;
         this.marks = marks;
+    }
+//    public void compareTo(Student s){
+//        if (this.)
+//    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public ArrayList<Double> getMarks() {
+        return marks;
+    }
+
+    @Override
+    public  String toString() {
+        return "Student{" +
+                "index='" + index + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", marks=" + marks +
+                '}';
     }
 
     public static class Builder{
@@ -47,10 +78,12 @@ public class Student {
            return this;
        }
 
-       public Builder setMarks(final Double ... marks) {
-           ArrayList<Double> m = new ArrayList<>();
-           m.add(... marks);
-           this.marks = m;
+       public Builder setMarks(final Double... m) {
+           ArrayList<Double> marks = new ArrayList<>();
+           for (double d: m){
+               marks.add(d);
+           }
+       this.marks = marks;
            return this;
        }
        public Student build(){

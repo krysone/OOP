@@ -1,8 +1,6 @@
 package Exc4;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Dziennik {
 
@@ -21,29 +19,52 @@ public class Dziennik {
 
     * */
 
-    Map<String, String> Students = new HashMap();
+    Map<String, Student> mapOfStudents = new HashMap();
+    Student student;
+
+    @Override
+    public String toString() {
+        return "\nStudent{" +
+                "index='" + student.getIndex() + '\'' +
+                ", name='" + student.getName() + '\'' +
+                ", surname='" + student.getSurname() + '\'' +
+                ", marks=" + student.getMarks() +
+                "}\n";
+    }
+
 
     public void addStudent(Student student) {
-
+        mapOfStudents.put(student.getIndex(), student);
     }
+
     public void removeStudent(Student student) {
-
-    }
-    public void removetudent(Student index) {
-
+        mapOfStudents.remove(student.getIndex(), student);
     }
 
-    public Student printOutStudent(String index) {
-        return student;
-    }
-    public Double avg (String index) {
-        return Average;
-    }
-    public List<Student> endangeredStudents() {
-        return list;
-    }
-    public List<Student> getSortedList(){
-        return sortedList;
+    public void removeStudentByIndex(String index) {
+        mapOfStudents.remove(index);
     }
 
+    public String printOutStudent(String index) {
+        mapOfStudents.get(index);
+        return mapOfStudents.get(index).toString();
+    }
+
+    public Double avg(String index) {
+        List<Double> studentMarks = mapOfStudents.get(index).getMarks();
+        OptionalDouble avg = studentMarks.stream().mapToDouble(a -> a).average();
+        return avg.isPresent() ? avg.getAsDouble() : 0;
+    }
+
+    public ArrayList<Student> endangeredStudents(double threshold) {
+        ArrayList<Student> endangSt = new ArrayList<>();
+        for (Map.Entry<String, Student> mm : mapOfStudents.entrySet()) {
+            double average = avg(mm.getKey());
+            if (average < threshold) {
+                endangSt.add(mm.getValue());
+            }
+        }
+        return endangSt;
+
+    }
 }
