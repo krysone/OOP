@@ -22,6 +22,7 @@ public class VehicleInfo {
         return date;
     }
 
+
     public VehicleInfo(final String registratonPlate, final CarType typeOfCar, final Date motorwayEntrance) {
         this.registratonPlate = registratonPlate;
         this.typeOfCar = typeOfCar;

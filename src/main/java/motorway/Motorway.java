@@ -23,73 +23,73 @@ Przyjmij pewną stałą kwotę do zapłaty za czas spędzony na autostradzie.
     Map<String, VehicleInfo> motorwayRegistry = new HashMap<>();
     static double tollCharge = 1000.0;    //per min
 
-    public double calculateCharge(Date entrance, Date leaving){
+    public double calculateCharge(Date entrance, Date leaving) {
         double chargeDueToPay = 0;
-        Long timeOnMotorway = leaving.getTime()-entrance.getTime();
-        chargeDueToPay=(timeOnMotorway*0.001*(1.0/60.0))*tollCharge;
+        Long timeOnMotorway = leaving.getTime() - entrance.getTime();
+        chargeDueToPay = (timeOnMotorway * 0.001 * (1.0 / 60.0)) * tollCharge;
         return chargeDueToPay;
     }
 
-    public void vehicleEntry(String registrationPlate, CarType type){
+    public void vehicleEntry(String registrationPlate, CarType type) {
 
         try {
-            if (motorwayRegistry.containsKey(registrationPlate)){
+            if (motorwayRegistry.containsKey(registrationPlate)) {
                 throw new Exception();
-            }
-            VehicleInfo vehicle = new VehicleInfo.Builder()
-                    .setRegistratonPlate(registrationPlate)
-                    .setTypeOfCar(type)
-                    .setMotorwayEntrance(VehicleInfo.getCurrentTimeUsingDate())
-                    .build();
+            }else {
+                VehicleInfo vehicle = new VehicleInfo.Builder()
+                        .setRegistratonPlate(registrationPlate)
+                        .setTypeOfCar(type)
+                        .setMotorwayEntrance(VehicleInfo.getCurrentTimeUsingDate())
+                        .build();
 
-            motorwayRegistry.put(registrationPlate, vehicle);
-            System.out.println(registrationPlate + "\t is using the motorway");
-        }catch (Exception e){
-            System.out.println("Sorry a vehicle of the given " +registrationPlate+" plates is already on the motorway" );
+                motorwayRegistry.put(registrationPlate, vehicle);
+                System.out.println(registrationPlate + "\t is using the motorway");
+            }
+        } catch (Exception e) {
+            System.out.println("Sorry a vehicle of the given " + registrationPlate + " plates is already on the motorway");
         }
     }
 
-    public VehicleInfo searchVehicle(String registrationPlate) throws Exception{
+    public VehicleInfo searchVehicle(String registrationPlate) throws Exception {
         try {
-            if (motorwayRegistry.containsKey(registrationPlate)){
-                System.out.println("The vehicle "+ registrationPlate+ " is using the motorway as we speak");
+            if (motorwayRegistry.containsKey(registrationPlate)) {
+                System.out.println("The vehicle " + registrationPlate + " is using the motorway as we speak");
                 System.out.println(motorwayRegistry.get(registrationPlate).toString());
                 return motorwayRegistry.get(registrationPlate);
-            }
-            else if
-            (!motorwayRegistry.containsKey(registrationPlate)){
-                throw new Exception ();
+            } else if
+            (!motorwayRegistry.containsKey(registrationPlate)) {
+                throw new Exception();
             }
 
-        }catch (Exception e){
-        System.out.println("sorry we don't have him in the registry");
-    }
+        } catch (Exception e) {
+            System.out.println("sorry we don't have him in the registry");
+        }
         return motorwayRegistry.get(registrationPlate);
     }
 
-    public double vehicleLeave(String registrationPlate){
+    public double vehicleLeave(String registrationPlate) {
         double charge = 0.0;
         try {
-            if (motorwayRegistry.containsKey(registrationPlate)){
+            if (motorwayRegistry.containsKey(registrationPlate)) {
 
-                System.out.println("vehicle "+ registrationPlate +" is about to leave");
+                System.out.println("vehicle " + registrationPlate + " is about to leave");
                 Date leaving = VehicleInfo.getCurrentTimeUsingDate();
-                 charge = calculateCharge(motorwayRegistry.get(registrationPlate).getMotorwayEntrance(), leaving);
-                String chargeDueToPayString = "there is " +charge+" due to pay";
+                charge = calculateCharge(motorwayRegistry.get(registrationPlate).getMotorwayEntrance(), leaving);
+                String chargeDueToPayString = "there is " + charge + " due to pay";
                 System.out.println(chargeDueToPayString);
                 motorwayRegistry.remove(registrationPlate);
 
-            }
-            else if (!motorwayRegistry.containsKey(registrationPlate)){
+            } else if (!motorwayRegistry.containsKey(registrationPlate)) {
                 throw new Exception();
             }
 
-        }catch (Exception e){
-            System.out.println("vehicle "+ registrationPlate +" is Not using the motorway");
+        } catch (Exception e) {
+            System.out.println("vehicle " + registrationPlate + " is Not using the motorway");
         }
-        return  charge;
+        return charge;
     }
-    public void drive(Long drivingTime){
+
+    public void drive(Long drivingTime) {
         try {
             Thread.sleep(drivingTime);
         } catch (InterruptedException e) {
