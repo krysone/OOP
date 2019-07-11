@@ -7,9 +7,13 @@ public class Email {
     private String firstname;
     private String lastname;
     private Department department;
-    private String company;
+    private String company = "ELI";
     private String password;
     private int defaultPassLength = 8;
+    private String email;
+    private String alternateEmail;
+    private String emailSuffix;
+    private int mailboxCapacity = 500;
 
     public Email(String firstname, String lastname) {
         this.firstname = firstname;
@@ -21,6 +25,18 @@ public class Email {
 
         this.password = randomPassword(defaultPassLength);
         System.out.println("Your Password: " + this.password);
+
+        this.email = firstname.toLowerCase() + "." + lastname.toLowerCase() + "@" + emailSuffix();
+        System.out.println("Your Email address: " + this.email);
+
+    }
+
+    private String emailSuffix() {
+        String emailSuffix = this.department.getName() + "." + "elicompany.com";
+        if (this.department == Department.BLANK) {
+            return emailSuffix = "elicompany.com";
+        }
+        return emailSuffix;
     }
 
     private Department setDepartment() {
@@ -53,5 +69,44 @@ public class Email {
         return new String(pass);
     }
 
+    public String getAlternateEmail() {
+        return alternateEmail;
+    }
 
+    public void setAlternateEmail(String alternateEmail) {
+        this.alternateEmail = alternateEmail;
+    }
+
+    public void setMailboxCapacity(int capacity) {
+        this.mailboxCapacity = capacity;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getMailboxCapacity() {
+        return mailboxCapacity;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void changePassword(String newPassword) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeSetup{" +
+                "firstname= '" + firstname + '\'' +
+                ", lastname= '" + lastname + '\'' +
+                ", department= " + department +
+                ", company= '" + company + '\'' +
+                ", password= '" + password + '\'' +
+                ", email= '" + email + '\'' +
+                ", mailboxCapacity [mb]= " + mailboxCapacity +
+                '}';
+    }
 }
